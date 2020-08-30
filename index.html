@@ -8,8 +8,9 @@
 </head>
 <body>
     <main id="main">
+
         <header id="header">
-            <button id="high-scores-btn">View High Scores</button>
+            <button id="scores-btn">View High Scores</button>
             <h4 id="timer">Time:</h4>
         </header>
         
@@ -19,10 +20,37 @@
                 Try to answer the following code related questions within the time limit.<br><br>
                 Keep in mind that incorrect answers will penalize your score/time by 10 seconds!
             </h3>
-            <div id="quiz-start-area">
-            <button id="start">Start Quiz</button>
+            <div id="quiz-start">
+                <button id="start-btn">Start Quiz</button>
             </div>
         </section>
+
+        <section id="quiz">
+            <h2 id="question-title">Question Placholder</h2>
+            <button id="a" onclick="checkAnswer('a')">A</button>
+            <button id="b" onclick="checkAnswer('b')">B</button>
+            <button id="c" onclick="checkAnswer('c')">C</button>
+            <button id="d" onclick="checkAnswer('d')">D</button>
+            <div id="results"></div>
+        </section>
+
+        <section id="quiz-end">
+            <h2>All Done!</h2>
+            <h3 id="game-score"></h2>
+            <p>Enter Your Initials:</p>
+            <input type="text" size="50" placeholder="Enter your initials" name="initals" id="initials"/>
+            <button id="submit-btn">Submit</button>
+        </section>
+
+        <section id="high-scores">
+            <h2>High Scores</h2>
+            <div id="scores-list"></div>
+            <div id="end-btns">
+                <button id="go-back-btn" onclick="goBack()">Go Back</button>
+                <button id="clear-scores-btn" onclick="clearScores()">Clear High Scores</button>
+            </div>
+        </section>
+
     </main>
     
     <script src="quiz.js"></script>
