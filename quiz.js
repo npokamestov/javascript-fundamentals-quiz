@@ -1,6 +1,18 @@
 var timerEl = document.getElementById('timer');
-
 var startBtn = document.getElementById('start');
+var scoresBtn = document.getElementById('high-scores');
+var body = document.body;
+var main = document.main;
+var questionEl = document.createElement('section');
+var h2El = document.createElement('h2');
+var choicesEl = document.createElement('ul');
+var li1 = document.createElement('li');
+var li2 = document.createElement('li');
+var li3 = document.createElement('li');
+var li4 = document.createElement('li');
+
+var choiceItems = document.getElementsByTagName('li');
+
 
 var questionsArr = [
     {
@@ -56,8 +68,26 @@ function countdown() {
 function displayMessage() {
     var message = "Time is up!"
     timerEl.textContent = message
+};
+
+function startQuiz() {
+    countdown();
+    var landing = document.getElementById("landing")
+    landing.remove();
+    var highScores = document.getElementById("high-scores")
+    highScores.remove();
+};
+
+function renderQuiz() {
+
 }
-    
+
+function viewScores() {
+    var scores = document.getElementById("main");
+    scores.remove();
+    h2El.textContent = "High Scores";
+    body.appendChild(h2El);
+}
 
 
 
@@ -71,4 +101,6 @@ function displayMessage() {
        
 
 
-startBtn.onclick = countdown;
+startBtn.onclick = startQuiz;
+
+scoresBtn.onclick = viewScores;

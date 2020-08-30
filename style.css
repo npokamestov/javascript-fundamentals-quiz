@@ -44,7 +44,7 @@ section {
     text-align: center;
     font-weight: normal;
 }
-#start {
+#quiz-start-area {
     display: flex;
     justify-content: center;
     padding: 20px;
