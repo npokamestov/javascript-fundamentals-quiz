@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    display: flex;
+    padding: 40px;
+}
+body {
+    height: 100vh;
+    padding: 50px 100px;
+}
+#high-scores {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+#timer {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
