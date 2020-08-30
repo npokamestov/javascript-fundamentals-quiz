@@ -100,8 +100,10 @@ function viewScores() {
     for (var i = 0; i < savedScores.length; i++) {
         savedScores[i].id = savedScoreIdCounter
 
+        createElement(liEl);
+        liEl.className = "high-score-item";
+        liEl.setAttribute("data-saved-score-id", savedScores[i].id);
     }
-    liEl.textContent = localStorage.getItem
 }
 
 
