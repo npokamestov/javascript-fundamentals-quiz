@@ -153,8 +153,11 @@ submitBtn.addEventListener('click', function highScore() {
         quizEndEl.remove();
         highScoresEl.appendTo(main);
 
+        createElement(liEl);
+        liEl.className = "high-score-item";
+        liEl.setAttribute("data-saved-score-id", savedScores[i].id);
     }
-})
+
 
 startBtn.addEventListener("click", startQuiz);
 
@@ -267,9 +270,7 @@ startBtn.addEventListener("click", startQuiz);
 
 //     }
 //     liEl.textContent = localStorage.getItem
-// }
-
-
+// 
 
 
 
