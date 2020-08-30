@@ -13,13 +13,22 @@ body {
     padding: 50px 100px;
     font-family: 'Courier New', Courier, monospace;
 }
-#high-scores {
+#high-scores-btn {
     display: flex;
-    flex-grow: 1;
     justify-content: flex-start;
-    padding: 20px;
+    align-self: center;
     text-align: center;
     color: blueviolet;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 15px;
+    border: 0px;
+    background: none;
+    outline: 0;
+}
+#high-scores-btn:hover {
+    color: fuchsia;
 }
 #timer {
     display: flex;
@@ -49,7 +58,7 @@ section {
     justify-content: center;
     padding: 20px;
 }
-button {
+#start {
     color: white;
     background-color: indigo;
     padding: 10px;
@@ -59,10 +68,10 @@ button {
     outline: 0;
     box-shadow: 0 4px #999;
 }
-button:hover{
+#start:hover{
     background-color: blueviolet;
 }
-button:active {
+#start:active {
     background-color: blueviolet;
     box-shadow: 0 2px #666;
     transform: translateY(2px);

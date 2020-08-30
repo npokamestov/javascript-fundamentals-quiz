@@ -1,17 +1,20 @@
 var timerEl = document.getElementById('timer');
 var startBtn = document.getElementById('start');
-var scoresBtn = document.getElementById('high-scores');
+var scoresBtn = document.getElementById('high-scores-btn');
 var body = document.body;
 var main = document.main;
 var questionEl = document.createElement('section');
+var sectionEl = document.createElement('section');
 var h2El = document.createElement('h2');
 var choicesEl = document.createElement('ul');
-var li1 = document.createElement('li');
-var li2 = document.createElement('li');
-var li3 = document.createElement('li');
-var li4 = document.createElement('li');
+var scoresEl = document.createElement('ul');
+var liEl = document.createElement('li');
 
 var choiceItems = document.getElementsByTagName('li');
+var scoreItems = document.getElementsByTagName('li');
+
+var highScores = [];
+var savedScoreIdCounter = 0;
 
 
 var questionsArr = [
@@ -50,7 +53,7 @@ var questionsArr = [
 ];
 
 function countdown() {
-    var timeLeft = 15;
+    var timeLeft = (15 * questionsArr.length);
 
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function() {
@@ -74,19 +77,31 @@ function startQuiz() {
     countdown();
     var landing = document.getElementById("landing")
     landing.remove();
-    var highScores = document.getElementById("high-scores")
+    var highScores = document.getElementById("high-scores-btn")
     highScores.remove();
 };
 
 function renderQuiz() {
 
-}
+};
 
 function viewScores() {
     var scores = document.getElementById("main");
     scores.remove();
+    body.appendChild(sectionEl);
     h2El.textContent = "High Scores";
-    body.appendChild(h2El);
+    sectionEl.appendChild(h2El);
+    sectionEl.appendChild(scoresEl);
+    var savedScores = localStorage.getItem("highScores");
+    if (!savedScores) {
+        return false;
+    }
+    savedScores = JSON.parse(savedScores);
+    for (var i = 0; i < savedScores.length; i++) {
+        savedScores[i].id = savedScoreIdCounter
+
+    }
+    liEl.textContent = localStorage.getItem
 }
 
 
