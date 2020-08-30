@@ -5,116 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Fundamentals Quiz</title>
     <style>
-        div#quiz {
-            border: purple 4px solid;
-            padding: 10px 30px 30px 30px;
-            background-color: seashell;
-            width: 50%;
-            margin: auto
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            display: flex;
+            padding: 40px;
+        }
+        body {
+            height: 100vh;
+            padding: 50px 100px;
+       }
+        #high-scores {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-start;
+        }
+        #timer {
+            display: flex;
+            flex-grow: 1;
+            justify-content: flex-end;
         }
     </style>
     <script>
+        var timerEl = document.getElementById('timer');
+
         var questionsArr = [
             {
-                question: "Quesiton #1",
-                a: "Answer 1",
-                b: "Answer 2",
-                c: "Answer 3",
-                d: "Answer 4",
-                answer: "Answer 1"
+                title: "Commonly used data types DO NOT include:",
+                choices: ["strings", "booleans", "alerts", "numbers"],
+                answer: "alerts"
             },
             {
-                question: "Quesiton #2",
-                a: "Answer 1",
-                b: "Answer 2",
-                c: "Answer 3",
-                d: "Answer 4",
-                answer: "Answer 2"
+                title: "The condition in an if / else statement is enclosed within ____.",
+                choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
+                answer: "parentheses"
             },
             {
-                question: "Quesiton #3",
-                a: "Answer 1",
-                b: "Answer 2",
-                c: "Answer 3",
-                d: "Answer 4",
-                answer: "Answer 3"
+                title: "Arrays in JavaScript can be used to store ____.",
+                choices: [
+                "numbers and strings",
+                "other arrays",
+                "booleans",
+                "all of the above"
+                ],
+                answer: "all of the above"
             },
             {
-                question: "Quesiton #4",
-                a: "Answer 1",
-                b: "Answer 2",
-                c: "Answer 3",
-                d: "Answer 4",
-                answer: "Answer 4"
+                title:
+                "String values must be enclosed within ____ when being assigned to variables.",
+                choices: ["commas", "curly brackets", "quotes", "parentheses"],
+                answer: "quotes"
             },
             {
-                question: "Quesiton #5",
-                a: "Answer 1",
-                b: "Answer 2",
-                c: "Answer 3",
-                d: "Answer 4",
-                answer: "Answer 1"
-            },
+                title:
+                "A very useful tool used during development and debugging for printing content to the debugger is:",
+                choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
+                answer: "console.log"
+            }
         ];
 
-        function get(x) {
-            return document.getElementById(x);
-        };
-
-        function renderQuestion() {
-            quiz = get("quiz");
-            if (pos >= questionsArr.length) {
-                quiz.innerHTML = "<h2> You got " + correct + " of " + questionsArr.length + " questionsArr correct!</h2>";
-                get("quiz-status").innerHTML = "Quiz completed!";
-                //resets the variable to allow users to restart the quiz
-                pos = 0;
-                correct = 0;
-                //stops rest of renderQuesiton funciton running when quiz ends
-                return false;
-            }
-            get("quiz-status").innerHTML = "Question " + (pos + 1) + " of " + questionsArr.length;
-            question = questionsArr[pos].question;
-            choiceA = questionsArr[pos].a;
-            choiceB = questionsArr[pos].b;
-            choiceC = questionsArr[pos].a;
-            choiceD = questionsArr[pos].d;
-
-            quiz.innerHTML = "<h3>" + question + "</h3>";
-
-            quiz.innerHTML += "<label> <input type='radio' name='choices' value='A'>" + choiceA + "</label><br>";
-            quiz.innerHTML += "<label> <input type='radio' name='choices' value='B'>" + choiceB + "</label><br>";
-            quiz.innerHTML += "<label> <input type='radio' name='choices' value='C'>" + choiceC + "</label><br>";
-            quiz.innerHTML += "<label> <input type='radio' name='choices' value='D'>" + choiceD + "</label><br><br>";
-            quiz.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button";
+        function countdown() {
+            var timeLeft = 15;
         }
 
-        function checkAnswer() {
-            //use getElementByName because we have an array which it will loop through
-            choices = document.getElementsByName("choices");
-            for (var i = 0; i < choices.length; i++) {
-                if (choices[i].checked) {
-                    choice = choices[i].value;
-                }
+
+        // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+        var timeInterval = setInterval(function() {
+            if (timeLeft > 1) {
+            timerEl.textContent = timeLeft + ' seconds remaining';
+            timeLeft--;
+            } else if (timeLeft === 1) {
+            timerEl.textContent = timeLeft + ' second remaining';
+            timeLeft--;
+            } else {
+            timerEl.textContent = '';
+            clearInterval(timeInterval);
+            displayMessage();
             }
-            //checks if answer matches the correct choice
-            if (choice == questionsArr[pos].answer) {
-                //each time there is a correct answer this value increases
-                correct++;
-            }
-            // changes position of which character user is on
-            pos++;
-            // then the renderQuestion function runs again to fo to the next question
+        }, 1000);
+    
 
-            //display right or wrong....basic
 
-            renderQuestions();
-        }
 
-        window.addEventListener("load", renderQuestions);
+
+
+
+
+
+
+
+       
+
+
+        startBtn.onclick = countdown;
     </script>
 </head>
 <body>
-    <h2 id="quiz-status"></h2>
+    <header>
+        <h4 id="high-scores">View High Scores</h4>
+        <h4 id="timer">Time: 0 </h4>
+    </header>
+    
+    <section>
+        <h2 id="quiz-title">Coding Quiz Challenge</h2>
+        <h3 id="quiz-description">
+            Try to answer the following code related questions within the time limit.<br>
+            Keep in mind that incorrect answers will penalize your score/time by 10 seconds!
+        </h3>
+        <button id="start">Start</button>
+    </section>
+
     <div id="quiz"></div>
 </body>
 </html>
