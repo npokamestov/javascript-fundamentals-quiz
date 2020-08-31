@@ -1,3 +1,5 @@
+var main = document.main
+
 var scoresBtn = document.getElementById('scores-btn');
 var timerEl = document.getElementById('timer');
 
@@ -19,18 +21,11 @@ var submitBtn = document.getElementById('submit-btn')
 
 var highScoresEl = document.getElementById('high-scores');
 var scoresListEl = document.getElementById('scores-list');
+var initialsDisplayEl = document.getElementById('initials-display');
+var scoresDisplayEL = document.getElementById('scores-display');
 var endBtnsEl = document.getElementById('end-btns');
 var goBackBtn = document.getElementById('go-back-btn');
 var clearScoresBtn = document.getElementById('clear-scores-btn');
-
-var lastQuestionIndex = questionsArr.length;
-var currentQuestionIndex = 0;
-var timeLeft = (15 * questionsArr.length);
-var timerInterval;
-
-var correct;
-var score = timeLeft;
-var highScores = [];
 
 
 // var sectionEl = document.createElement('section');
@@ -52,7 +47,7 @@ var questionsArr = [
         choiceB: "booleans",
         choiceC: "alerts",
         choiceD: "numbers",
-        answer: "alerts"
+        correctAnswer: "alerts"
     },
     {
         question: "The condition in an if / else statement is enclosed within ____.",
@@ -60,7 +55,7 @@ var questionsArr = [
         choiceB: "curly brackets",
         choiceC: "parentheses",
         choiceD: "square brackets",
-        answer: "parentheses"
+        correctAnswer: "parentheses"
     },
     {
         question: "Arrays in JavaScript can be used to store ____.",
@@ -68,7 +63,7 @@ var questionsArr = [
         choiceB: "other arrays",
         choiceC: "booleans",
         choiceD: "all of the above",
-        answer: "all of the above"
+        correctAnswer: "all of the above"
     },
     {
         question:"String values must be enclosed within ____ when being assigned to variables.",
@@ -76,7 +71,7 @@ var questionsArr = [
         choiceB: "curly brackets",
         choiceC: "quotes",
         choiceD: "parentheses",
-        answer: "quotes"
+        correctAnswer: "quotes"
     },
     {
         question:"A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -84,19 +79,27 @@ var questionsArr = [
         choiceB: "terminal / bash",
         choiceC: "for loops",
         choiceD: "console.log",
-        answer: "console.log"
+        correctAnswer: "console.log"
     }
 ];
 
+var currentQuestionIndex = 0;
+var timerInterval;
+var correct;
+var score = timeLeft;
+var savedHighScores = [];
+var timeLeft = (15 * questionsArr.length);
+var finalQuestionIndex = questionsArr.length;
+
 function renderQuizQuestions () {
-    landingEl.remove();
-    quizEndEl.remove();
-    highScoresEl.remove()
-    if (currentQuestionIndex === lastQuestionIndex) {
+    // landingEl.style.display = "none";
+    quizEndEl.style.display = "none";
+    // highScoresEl.style.display = "none";
+    if (currentQuestionIndex === finalQuestionIndex) {
         return showScore();
     }
     var currentQuestion = questionsArr[currentQuestionIndex];
-    questionTitleEl.innerHTML = "<p>" + currentQuestion.questionTitleEl + "</p>";
+    questionTitleEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
     buttonA.innerHTML = currentQuestion.choiceA;
     buttonB.innerHTML = currentQuestion.choiceB;
     buttonC.innerHTML = currentQuestion.choiceC;
@@ -104,59 +107,125 @@ function renderQuizQuestions () {
 };
 
 function startQuiz() {
-    landingEl.remove();
-    scoresBtn.remove();
-    quizEndEl.remove();
-    highScoresEl.remove();
+    landingEl.style.display = "none";
+    scoresBtn.style.display = "none";
+    quizEndEl.style.display = "none";
+    // highScoresEl.style.display = "none";
     renderQuizQuestions();
 
     timerInterval = setInterval(function() {
         if (timeLeft >= 1) {
         timerEl.textContent = "Time: " + timeLeft;
         timeLeft--;
-        } else {
+        }
+        else {
         timerEl.textContent = '';
-        clearInterval(timeInterval);
-        displayMessage();
+        clearInterval(timerInterval);
+        // displayMessage();
         showScore();
         }
     }, 1000);
     quizEl.style.display = "block";
 };
 
-function displayMessage() {
-    var message = "Time is up!"
-    timerEl.textContent = message
-};
+// function displayMessage() {
+//     var message = "Time is up!"
+//     timerEl.textContent = message
+// };
 
 function showScore() {
-    quizEl.remove();
+    quizEl.style.display = "none";
+    quizEndEl.style.display = "flex";
     clearInterval(timerInterval);
     initialsInputEl.value = "";
     gameScoreEl.innerHTML = "Your score is " + score + "!";
 };
 
-submitBtn.addEventListener('click', function highScore() {
+submitBtn.addEventListener("click", function highScore() {
     if (initialsInputEl.value === "") {
         alert("Initials cannot be blank");
         return false;
     }
     else {
-        highScores = JSON.parse(localStorage.getItem("highScores"));
+        savedHighScores = JSON.parse(localStorage.getItem("savedHighScores"));
         var currentUser = initialsInputEl.value;
         var currentHighScore = {
             name: currentUser,
             score: score
         };
-        quizEndEl.remove();
-        highScoresEl.appendTo(main);
+        quizEndEl.style.display = "none";
+        highScoresEl.style.display = "flex";
+        endBtnsEl.style.display = "flex";
 
-        
+        savedHighScores.push(currentHighScore);
+        localStorage.setItem("savedHighScores", JSON.stringify(savedHighScores));
+        renderHighScores();
     }
-})
+});
 
+function renderHighScores() {
+    initialsDisplayEl.innerHTML = "";
+    scoresDisplayEL.innerHTML = "";
+    var highScores = JSON.parse(localStorage.getItem("savedHighScores"));
+    for (var i = 0; i < highScores.length; i++) {
+        var newNameSpan = document.createElement('li');
+        var newScoreSpan = document.createElement('li');
+        newNameSpan.textContent = highScores[i].name;
+        newScoreSpan.textContent = highScores[i].score;
+        initialsDisplayEl.appendChild(newNameSpan);
+        scoresDisplayEL.appendChild(newScoreSpan);
+    }
+};
+
+function showHighScores() {
+    landingEl.style.display = "none";
+    quizEndEl.style.display = "none";
+    highScoresEl.style.display = "flex";
+    scoresBtn.style.display = "none";
+    endBtnsEl.style.display = "none";
+
+    renderHighScores();
+};
+
+function clearScore() {
+    window.localStorage.clear();
+    initialsDisplayEl.textContent = "";
+    scoresDisplayEL.textContent = "";
+};
+
+function replay() {
+    highScoresEl.style.display = "none";
+    quizEndEl.style.display = "none";
+    landingEl.style.display = "flex";
+    scoresBtn.style.display = "flex"
+    timeLeft = (15 * questionsArr.length);
+    score = timeLeft;
+    currentQuestionIndex = 0;
+};
+
+function checkAnswer(answer) {
+    correct = questionsArr[currentQuestionIndex].correctAnswer;
+    if (answer === correct && currentQuestionIndex !== finalQuestionIndex) {
+        alert("Correct!")
+        currentQuestionIndex++;
+        renderQuizQuestions();
+    }
+    else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex) {
+        alert("Wrong!");
+        currentQuestionIndex++;
+        score = timeLeft - 10;
+        renderQuizQuestions();
+    }
+    else {
+        showScore()
+    }
+};
+
+goBackBtn.addEventListener("click", replay);
+clearScoresBtn.addEventListener("click", clearScore);
 startBtn.addEventListener("click", startQuiz);
 
+replay();
 
 
 
